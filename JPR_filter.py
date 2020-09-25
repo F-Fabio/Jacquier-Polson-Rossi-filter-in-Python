@@ -24,8 +24,8 @@ def get_SV(hlast, g, mubar, sigmabar, errors):
     i=0 # Time period 0
     
     hlead=hlast[i+1]
-    ss=sigmabar*g/(g+sigmabar)                                       # Variance
-    mu=ss*((mubar/sigmabar)+(math.log(hlead)/g))                     # Mean
+    ss=sigmabar*g/(g+sigmabar)                                       
+    mu=ss*((mubar/sigmabar)+(math.log(hlead)/g))                     
     # Draw from lognormal  using mu and ss
     h=math.exp(mu+((ss**.5)*np.random.normal(0, 1, 1)))
     hnew[i]=h;
@@ -43,10 +43,10 @@ def get_SV(hlast, g, mubar, sigmabar, errors):
         # Candidate draw from lognormal
         htrial=np.exp(mu+(ss**.5)*np.random.normal(0,1,1))
         
-        # Acceptance probability in logs
-        lp1=-.5*np.log(htrial)-(yt**2)/(2*htrial)                   # Numerator
-        lp0=-.5*np.log(hlast[i])-(yt**2)/(2*hlast[i])               # Denominator
-        accept=min(np.array([1,math.exp(lp1-lp0)]))                 # Ensure accept<=1
+        # Acceptance probability 
+        lp1=-.5*np.log(htrial)-(yt**2)/(2*htrial)                   
+        lp0=-.5*np.log(hlast[i])-(yt**2)/(2*hlast[i])               
+        accept=min(np.array([1,math.exp(lp1-lp0)]))                 
         
         u=np.random.rand(1,1)
         if u<=accept:
@@ -68,7 +68,7 @@ def get_SV(hlast, g, mubar, sigmabar, errors):
     # Acceptance probability
     lp1=-.5*np.log(htrial)-(yt**2)/(2*htrial)
     lp0=-.5*np.log(hlast[i])-(yt**2)/(2*hlast[i])
-    accept=min(np.array([1,math.exp(lp1-lp0)]))                     # Ensure accept<=1
+    accept=min(np.array([1,math.exp(lp1-lp0)]))                     
 
     u=np.random.rand(1,1)
     if u<=accept:
